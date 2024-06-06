@@ -1,0 +1,51 @@
+sub, sup {
+    position: relative;
+    font-size: .75em;
+  }
+  
+  sub {
+    bottom: -0.25em;
+    left: 0.25em;
+  }
+  
+  sup {
+    top: -0.5em;
+    left: 0.25em;
+  }
+  
+  pre, code {
+    font-family: var(--font-mono);
+  }
+  
+  [type=date],
+  [type=datetime],
+  [type=datetime-local],
+  [type=email],
+  [type=month],
+  [type=number],
+  [type=password],
+  [type=search],
+  [type=tel],
+  [type=text],
+  [type=time],
+  [type=url],
+  [type=week],
+  textarea,
+  select {
+    padding: 0.5em 0.75em;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  [type='checkbox'], 
+  [type='radio'] {
+    width: 1em;
+    height: 1em;
+    &:checked {
+      border-color: transparent;
+      background-color: currentColor;
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
