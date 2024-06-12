@@ -32,62 +32,56 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Log in" />
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="text-success">
             {{ status }}
         </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
+        <form @submit.prevent="submit" class="col-lg-4 offset-lg-4 px-4">
+            <div class="row g-3">
+                <div class="col-12">
+                    
+                    <InputLabel for="email" value="Username/Email" />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        class="form-control"
+                        v-model="form.email"
+                        autofocus
+                        autocomplete="username"
+                    />
+                    <InputError :message="form.errors.email" />
+                </div>
+                <div class="col-12">
+                    <InputLabel for="password" value="Password" />
+                    <TextInput
+                        id="password"
+                        type="password"
+                        v-model="form.password"
+                        autocomplete="current-password"
+                    />
+                    <InputError :message="form.errors.password" />
+                    <Link
+                        v-if="canResetPassword"
+                        :href="route('password.request')"
+                        class="text-end"
+                    >
+                        Forgot your password?
+                    </Link>
+                </div>
+                <div class="form-check">
                     <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Remember me
+                    </label>
+                </div>
+                <div class="col-12">
+                    <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Log in
+                    </PrimaryButton>
+                </div>
                 <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
+                    :href="route('register')">
+                    Don't have account? Click here to register
                 </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
             </div>
         </form>
     </GuestLayout>
