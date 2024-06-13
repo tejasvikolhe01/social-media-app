@@ -1,7 +1,0 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-/* @import 'node_modules/bootstrap/dist/css/bootstrap.css'; */
-@import "node_modules/bootstrap/scss/bootstrap.scss";
-@import "resources/css/reset.scss";
-@import "resources/css/style.scss";
