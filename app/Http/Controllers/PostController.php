@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -24,13 +25,14 @@ class PostController extends Controller
             'post_content' => 'required'
         ]);
         $post = Post::create([
-            'user_id' => auth()->id(),
+            'user_id'      => auth()->id(),
             'post_content' => $request->post_content,
         ]);
         return redirect(route('dashboard', absolute:false));
     }
 
     public function getPosts() {
-        return (Post::all());
+        //dd(Post::with('user')->get());
+        return (Post::with('user')->get());
     }
 }

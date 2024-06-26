@@ -24,7 +24,7 @@ import { ref } from 'vue';
                             id="new-post"
                             type="text"
                             placeholder="write something here"
-                            v-model="form.post_content"
+                            v-model="post_content"
                             autofocus
                             />
                         </div>
@@ -34,7 +34,7 @@ import { ref } from 'vue';
                     </form>
                     <div class="post_items row g-3">
                         <div class="post_item" v-for="(post, index) in posts">
-                            <div class="post_user">Charles</div>
+                            <div class="post_user">{{ post.user.first_name }}</div>
                             <span class="post_date">{{ post.created_at}}</span>
                             <p class="post_content">{{ post.post_content}}</p>
                             <span class="post_likes">
@@ -43,7 +43,7 @@ import { ref } from 'vue';
                             <span class="post_comments_count" @click="showComments">
                                 <i class="zmdi zmdi-comment-text"></i>Comments
                             </span>
-                            <div class="post_comments">
+                            <div class="post_comments"><!-- yet to be developed -->
                                 <p class="post_comment">
                                     <span class="d-block"><strong>ABC</strong></span>
                                     <span class="d-block">Hello testing comment</span>                                
@@ -80,37 +80,40 @@ import { ref } from 'vue';
     </AuthenticatedLayout>
 </template>
 <script>
-    const form = useForm({
-        post_content:''
-    });
-
-    const submitPost = () => {
-        form.post(route('dashboard'), {
-            onFinish: () => form.reset(),
-        });
-    }
-
-    const postComment = (comment, id) => {
-        axios
-        .post('/create-comment', {
-            post_id: id,
-            comment_text: comment,
-        })
-    }
     export default {
         data: function () {
             return {
                 posts:[],
-                comments:[]
+                comments:[],
+                post_content: ''
             }
         },
         mounted() {
-            // call to fetch all posts
-            axios
-        .get('/posts')
-        .then(response => (this.posts = response.data))
+            this.getAllPosts();
         },
         methods: {
+            //submit a post
+            submitPost() {
+                axios
+                .post('/create-post', {
+                    post_content: this.post_content
+                })
+                this.post_content='';
+            },
+            // fetch all posts
+            getAllPosts() {
+                axios
+                .get('/posts')
+                .then(response => (this.posts = response.data))
+            },
+            //submit a comment
+            postComment(comment, id) {
+                axios
+                .post('/create-comment', {
+                    post_id: id,
+                    comment_text: comment,
+                })
+            },
             //hide & show comments section
             showComments(event) {
                 let targetElement = event.target;

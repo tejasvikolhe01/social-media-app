@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\Comment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -14,12 +16,15 @@ class CommentController extends Controller
     {
         return Inertia::render('/dashboard');
     }
+
     /**
     * Store a newly created resource in storage.
     *
     * @param  \Illuminate\Http\Request  $request
+    *
     * @return \Illuminate\Http\Response
     */
+
     public function createComment(Request $request): RedirectResponse
     {
         $request->validate([
@@ -27,9 +32,9 @@ class CommentController extends Controller
         ]);
         
         $comment = Comment::create([
-            'user_id' => auth()->id(),
+            'user_id'      => auth()->id(),
             'comment_text' => $request->comment_text,
-            'post_id' => $request->post_id
+            'post_id'      => $request->post_id
         ]);
         return redirect(route('dashboard', absolute:false));
     }

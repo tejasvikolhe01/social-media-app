@@ -18,17 +18,13 @@ const showingNavigationDropdown = ref(false);
                 <div class="d-lg-none">
                     <div class="flex justify-between h-16">
                         <div class="flex">
-
                         <!-- Navigation Links -->
-                        <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"> -->
                         <div class="d-lg-none">
                             <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                 Dashboard
                             </NavLink>
                         </div>
                         </div>
-
-                        <!-- <div class="hidden sm:flex sm:items-center sm:ms-6"> -->
                         <div class="d-lg-none">
                             <!-- Settings Dropdown -->
                             <div class="ms-3 relative">
@@ -56,7 +52,6 @@ const showingNavigationDropdown = ref(false);
                                             </button>
                                         </span>
                                     </template>
-
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
@@ -66,7 +61,6 @@ const showingNavigationDropdown = ref(false);
                                 </Dropdown>
                             </div>
                         </div>
-
                         <!-- Hamburger -->
                         <div class="d-lg-none">
                             <button
@@ -99,7 +93,6 @@ const showingNavigationDropdown = ref(false);
                         </div>
                     </div>
                 </div>
-
                 <!-- Responsive Navigation Menu -->
                 <div
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
@@ -109,7 +102,6 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
-
                     <!-- Responsive Settings Options -->
                     <div class="d-inline-block">
                         <div class="d-inline-block">
@@ -118,7 +110,6 @@ const showingNavigationDropdown = ref(false);
                             </div>
                             <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.first_name }}</div>
                         </div>
-
                         <div class="d-inline-block">
                             <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button" class="btn btn-secondary">
@@ -128,14 +119,12 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
             </nav>
-
             <!-- Page Heading -->
             <header v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>
-
             <!-- Page Content -->
             <main>
                 <slot />

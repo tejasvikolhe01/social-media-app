@@ -26,15 +26,18 @@ class Comment extends Model
     *
     * @var array
     */
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+    
     /**
     * The has Many Relationship
     *
     * @var array
     */
+
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id');

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('post_id')->unsigned();
-            $table->integer('parent_id')->unsigned()->nullable();
             $table->text('comment_text');
             $table->timestamps();
             $table->softDeletes();
