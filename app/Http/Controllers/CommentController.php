@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class CommentController extends Controller
 {
+     /**
+     * @return Response
+     */
+    
     public function create(): Response
     {
         return Inertia::render('/dashboard');
@@ -31,11 +33,12 @@ class CommentController extends Controller
             'comment_text'=>'required',
         ]);
         
-        $comment = Comment::create([
+        Comment::create([
             'user_id'      => auth()->id(),
             'comment_text' => $request->comment_text,
             'post_id'      => $request->post_id
         ]);
+
         return redirect(route('dashboard', absolute:false));
     }
 }

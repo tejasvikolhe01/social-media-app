@@ -24,7 +24,7 @@ class Comment extends Model
     /**
     * The belongs to Relationship
     *
-    * @var array
+    * @return BelongsTo
     */
 
     public function user()
@@ -33,14 +33,13 @@ class Comment extends Model
     }
     
     /**
-    * The has Many Relationship
+    * The belongs to Relationship
     *
-    * @var array
+    * @return HasMany
     */
 
     public function replies()
     {
-        return $this->hasMany(Comment::class, 'parent_id');
+        return $this->hasMany(Comment::class);
     }
-
 }

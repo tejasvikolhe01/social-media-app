@@ -19,6 +19,12 @@ class Post extends Model
         'user_id',
         'post_content',
     ];
+    
+    /**
+    * The belongs to Relationship
+    *
+    * @return BelongsTo
+    */
 
     public function user() 
     {

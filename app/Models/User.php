@@ -47,6 +47,12 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+    * The belongs to Relationship
+    *
+    * @return HasMany
+    */
+
     public function usersPosts() 
     {
         return $this->hasMany(Post::class);

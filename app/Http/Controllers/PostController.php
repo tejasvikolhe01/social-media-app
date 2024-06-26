@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +13,10 @@ use Inertia\Response;
 
 class PostController extends Controller
 {
+     /**
+     * @return Response
+     */
+
     public function create(): Response
     {
         return Inertia::render('/dashboard');
@@ -24,15 +27,17 @@ class PostController extends Controller
         $request->validate([ 
             'post_content' => 'required'
         ]);
-        $post = Post::create([
+
+        Post::create([
             'user_id'      => auth()->id(),
             'post_content' => $request->post_content,
         ]);
+
         return redirect(route('dashboard', absolute:false));
     }
 
-    public function getPosts() {
-        //dd(Post::with('user')->get());
-        return (Post::with('user')->get());
+    public function getPosts() 
+    {
+        return Post::with('user')->get();
     }
 }
