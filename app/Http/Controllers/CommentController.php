@@ -26,7 +26,6 @@ class CommentController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-
     public function createComment(Request $request): RedirectResponse
     {
         $request->validate([
