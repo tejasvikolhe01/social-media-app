@@ -14,7 +14,6 @@ class CommentController extends Controller
      /**
      * @return Response
      */
-    
     public function create(): Response
     {
         return Inertia::render('/dashboard');
