@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/create-post', [PostController::class, 'createPost']);
     Route::post('/create-comment', [CommentController::class, 'createComment']);
     Route::get('/posts', [PostController::class, 'getPosts']);
+    Route::get('/comments', [CommentController::class, 'getComments']);
 });
 
 require __DIR__.'/auth.php';

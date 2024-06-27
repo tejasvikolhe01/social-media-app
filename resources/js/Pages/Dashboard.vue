@@ -43,19 +43,13 @@ import { ref } from 'vue';
                             <span class="post_comments_count" @click="showComments">
                                 <i class="zmdi zmdi-comment-text"></i>Comments
                             </span>
-                            <div class="post_comments"><!-- yet to be developed -->
-                                <p class="post_comment">
-                                    <span class="d-block"><strong>ABC</strong></span>
-                                    <span class="d-block">Hello testing comment</span>                                
-                                </p>
-                                <p class="post_comment">
-                                    <span class="d-block"><strong>XYZ</strong></span>
-                                    <span class="d-block">Hello testing comment12</span>                                
-                                </p>
-                                <p class="post_comment">
-                                    <span class="d-block"><strong>PQR</strong></span>
-                                    <span class="d-block">Hello testing comment123</span>                                
-                                </p>
+                            <div class="post_comments">
+                                <div class="post_comment" v-for="(comment, index) in allcomments">
+                                    <p v-if="comment.post_id == post.id">
+                                        <span class="d-block"><strong>{{ comment.user.first_name }}</strong></span>
+                                        <span class="d-block">{{ comment.comment_text }}</span>                                
+                                    </p>
+                                </div>
                             </div>
                             <div class="post_comment-box row g-3">
                                 <div class="col-md-8">
@@ -85,11 +79,13 @@ import { ref } from 'vue';
             return {
                 posts:[],
                 comments:[],
-                post_content: ''
+                post_content: '',
+                allcomments: []
             }
         },
         mounted() {
             this.getAllPosts();
+            this.getAllComments();
         },
         methods: {
             //submit a post
@@ -113,6 +109,12 @@ import { ref } from 'vue';
                     post_id: id,
                     comment_text: comment,
                 })
+            },
+            // fetch all comments
+            getAllComments() {
+                axios
+                .get('/comments')
+                .then(response => (this.allcomments = response.data))
             },
             //hide & show comments section
             showComments(event) {

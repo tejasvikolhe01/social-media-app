@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -40,5 +42,10 @@ class CommentController extends Controller
         ]);
 
         return redirect(route('dashboard', absolute:false));
+    }
+
+    public function getComments() 
+    {
+        return Comment::with('user')->get();
     }
 }

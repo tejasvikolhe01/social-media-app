@@ -16,8 +16,7 @@ class Comment extends Model
     */
     protected $fillable = [
         'user_id', 
-        'post_id', 
-        'parent_id', 
+        'post_id',
         'comment_text',
     ];  
 
@@ -32,14 +31,4 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
     
-    /**
-    * The belongs to Relationship
-    *
-    * @return HasMany
-    */
-
-    public function replies()
-    {
-        return $this->hasMany(Comment::class);
-    }
 }

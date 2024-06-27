@@ -30,4 +30,15 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+    * The belongs to Relationship
+    *
+    * @return HasMany
+    */
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
