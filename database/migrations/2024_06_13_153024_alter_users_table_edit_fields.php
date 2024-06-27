@@ -26,12 +26,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // $table->string('name', 255)->after('id');
+            $table->string('name', 255)->after('id');
             $table->dropColumn([
                 'first_name',
                 'last_name',
-                // 'username',
-                // 'dob',
+                'username',
+                'dob',
             ]);
         });
     }

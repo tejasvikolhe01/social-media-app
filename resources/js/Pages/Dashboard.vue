@@ -41,14 +41,12 @@ import { ref } from 'vue';
                                 <i class="zmdi zmdi-thumb-up"></i>Likes
                             </span>
                             <span class="post_comments_count" @click="showComments">
-                                <i class="zmdi zmdi-comment-text"></i>Comments
+                                <i class="zmdi zmdi-comment-text"></i> {{ post.comments.length }} Comments
                             </span>
                             <div class="post_comments">
-                                <div class="post_comment" v-for="(comment, index) in allcomments">
-                                    <p v-if="comment.post_id == post.id">
+                                <div class="post_comment" v-for="(comment, index) in post.comments">
                                         <span class="d-block"><strong>{{ comment.user.first_name }}</strong></span>
-                                        <span class="d-block">{{ comment.comment_text }}</span>                                
-                                    </p>
+                                        <span class="d-block">{{ comment.comment_text }}</span>
                                 </div>
                             </div>
                             <div class="post_comment-box row g-3">
