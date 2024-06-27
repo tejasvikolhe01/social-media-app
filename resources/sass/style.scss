@@ -3,3 +3,37 @@
     display: inline-block;
     margin-bottom: .5rem;
   }
+
+.post {
+  &_items{
+    margin: 0 auto;
+  }
+  &_item {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 15px;
+  }
+  &_likes {
+    margin: 0 5px;
+
+    i {
+      margin-right: 8px;
+    }
+  }
+  &_comments_count {
+    margin: 0 5px;
+    
+    i {
+      margin-right: 8px;
+    }
+  }
+  &_comments {
+    display: none;
+  }
+  &_comment {
+    margin: 0 auto;
+  }
+}
+.show {
+  display: block;
+}

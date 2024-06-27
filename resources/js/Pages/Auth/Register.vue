@@ -103,7 +103,7 @@ const submit = () => {
                         <InputError :message="form.errors.password_confirmation" />
                     </div>
                     <div class="col-12">
-                        <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        <PrimaryButton>
                             Register
                         </PrimaryButton>
                     </div>
