@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,7 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/create-post', [PostController::class, 'createPost']);
     Route::post('/create-comment', [CommentController::class, 'createComment']);
     Route::get('/posts', [PostController::class, 'getPosts']);
-    Route::get('/comments', [CommentController::class, 'getComments']);
+    Route::post('/submit-likes', [LikeController::class, 'submitLikes']);
+    Route::post('/delete-like', [LikeController::class, 'deleteLikes']);
 });
 
 require __DIR__.'/auth.php';
