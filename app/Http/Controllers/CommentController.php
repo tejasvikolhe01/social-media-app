@@ -40,12 +40,4 @@ class CommentController extends Controller
 
         return redirect(route('dashboard', absolute:false));
     }
-    
-    /**
-     * @return Collection
-     */
-    public function getComments(): Collection 
-    {
-        return Comment::with('user')->get();
-    }
 }
