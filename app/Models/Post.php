@@ -43,7 +43,6 @@ class Post extends Model
     }
 
     /**
-     *
      * @return MorphMany
      */
     public function likes(): MorphMany
