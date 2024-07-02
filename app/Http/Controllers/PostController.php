@@ -11,7 +11,7 @@ use Inertia\Response;
 
 class PostController extends Controller
 {
-     /**
+    /**
      * @return Response
      */
     public function create(): Response

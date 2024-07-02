@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Comment extends Model
 {
@@ -28,7 +27,7 @@ class Comment extends Model
      */
     protected $with = [
         'user',
-        'likes'
+        'likes',
     ];
     
     /**
@@ -42,7 +41,6 @@ class Comment extends Model
     }
     
     /**
-     *
      * @return MorphMany
      */
     public function likes(): MorphMany
