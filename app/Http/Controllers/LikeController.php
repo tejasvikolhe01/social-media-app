@@ -18,25 +18,16 @@ class LikeController extends Controller
     public function submitLikes(Request $request): RedirectResponse
     {
         $type = $request->type === 'Post' ? Post::class : Comment::class;
-
-        Like::create([
-            'user_id'       => auth()->id(),
-            'likeable_id'   => $request->id,
-            'likeable_type' => $type
-        ]);
-
-        return back();
-    } 
-
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse
-     */
-    public function deleteLikes(Request $request): RedirectResponse
-    {
-        $like = Like::where('likeable_id',$request->id)->where('user_id',auth()->id());
-        $like->delete();
+        $like = Like::where('likeable_id', $request->id)->where('likeable_type', $type)->where('user_id',auth()->id());
+        if($like->count() > 0) {
+            $like->delete();
+        } else {
+            Like::create([
+                'user_id'       => auth()->id(),
+                'likeable_id'   => $request->id,
+                'likeable_type' => $type
+            ]);
+        }
         
         return back();
     }

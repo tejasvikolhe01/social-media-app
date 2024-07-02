@@ -131,41 +131,12 @@ import { ref } from 'vue';
             },
             //like & dislike functionality
             submitLikes(id, type) {
-                this.loggedInUser = document.getElementById('user').innerText;
-                //To check duplicate entry in likes table
-                    for(let i=0; i<this.posts.length; i++){
-                        if(type==='Post') {
-                            for(let j=0; j<this.posts[i].likes.length; j++) {
-                                if(this.posts[i].likes[j].user_id == this.loggedInUser && this.posts[i].likes[j].likeable_id == id) {
-                                    this.entryPresent = true;
-                                }
-                            }
-                        } else {
-                            for(let x=0; x<this.posts[i].comments.length; x++) {
-                                if(this.posts[i].comments[x].likes) {
-                                    for(let y=0; y<this.posts[i].comments[x].likes.length; y++) {
-                                        if(this.posts[i].comments[x].likes[y].user_id == this.loggedInUser && this.posts[i].comments[x].likes[y].likeable_id == id) {
-                                            this.entryPresent = true;
-                                        }
-                                    }
-                                }      
-                            }
-                        }
-                }
-                if(!this.entryPresent) {
-                    axios
-                    .post('/submit-likes', {
-                        id: id,
-                        type: type
-                    })
-                    .then(response => (window.location.reload()))
-                }else {
-                    axios
-                    .post('/delete-like',{
-                        id: id
-                    })
-                    .then(response => (window.location.reload()))
-                }
+                axios
+                .post('/submit-likes', {
+                    id: id,
+                    type: type
+                })
+                .then(response => (window.location.reload()))
             },
             loadMore() {
                 if (this.postLength > this.posts.length) return;

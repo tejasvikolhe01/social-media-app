@@ -29,7 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/create-comment', [CommentController::class, 'createComment']);
     Route::get('/posts', [PostController::class, 'getPosts']);
     Route::post('/submit-likes', [LikeController::class, 'submitLikes']);
-    Route::post('/delete-like', [LikeController::class, 'deleteLikes']);
 });
 
 require __DIR__.'/auth.php';
