@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -41,8 +42,8 @@ class PostController extends Controller
     /**
      * @return Collection
      */
-    public function getPosts(): Collection
+    public function getPosts(): LengthAwarePaginator
     {
-        return Post::with(['user','comments','likes'])->get();
+        return Post::with(['user','comments','likes'])->paginate(3);
     }
 }

@@ -34,7 +34,7 @@ import { ref } from 'vue';
                         </PrimaryButton>
                     </form>
                     <div class="post_items row g-3">
-                        <div class="post_item" v-for="(post, index) in allPostsLoaded">
+                        <div class="post_item" v-for="(post, index) in posts">
                             <div class="post_user">{{ post.user.first_name }}</div>
                             <span class="post_date">{{ post.created_at}}</span>
                             <p class="post_content">{{ post.post_content}}</p>
@@ -74,9 +74,9 @@ import { ref } from 'vue';
                                 </PrimaryButton>
                             </div>
                         </div><!-- post-item end -->
-                        <PrimaryButton v-if="this.posts.length>3 && this.postLength < this.posts.length" @click="loadMore" class="offset-lg-5 col-md-3">
-                            Load More
-                        </PrimaryButton>
+                        <div v-for="(link,index) in loadMoreLinks" class="offset-lg-5 col-md-3">
+                            <a :href="link.url">{{ index }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,6 +93,7 @@ import { ref } from 'vue';
                 entryPresnt: false,
                 loggedInUser:0,
                 postLength: 3,
+                loadMoreLinks:[],
             }
         },
         mounted() {
@@ -112,7 +113,11 @@ import { ref } from 'vue';
             getAllPosts() {
                 axios
                 .get('/posts')
-                .then(response => (this.posts = response.data))
+                .then(response => {
+                    this.posts = response.data.data;
+                    this.loadMoreLinks = response.data.links;
+                    console.log(response);
+                })
             },
             //submit a comment
             postComment(comment, id) {
@@ -142,11 +147,6 @@ import { ref } from 'vue';
                 if (this.postLength > this.posts.length) return;
                     this.postLength = this.postLength + 3;
             }
-        },
-        computed: {
-            allPostsLoaded() {
-                return this.posts.slice(0, this.postLength);
-            },
         }
     }
 </script>
