@@ -12,26 +12,30 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
     use DatabaseMigrations;
+   
     /**
-     * A basic test example.
+     * @return void
      */
     public function test_user_can_create_post(): void
     {
         $user = User::factory()->create();
-        Post::create([
-            'user_id'      => $user->id,
-            'post_content' => 'hello'
-        ]);
+        Post::create(
+            [
+                'user_id'      => $user->id,
+                'post_content' => 'hello'
+            ]
+        );
 
         $this->assertDatabaseHas('posts', 
-        [
-            'user_id'      => $user->id,
-            'post_content' => 'hello'
-        ]);
+            [
+                'user_id'      => $user->id,
+                'post_content' => 'hello'
+            ]
+        );
     }
 
     /**
-     * A basic test example.
+     * @return void
      */
     public function test_user_can_create_comment(): void
     {
@@ -42,13 +46,16 @@ class PostTest extends TestCase
                 'user_id'      => $user->id,
                 'comment_text' => 'comment here on hello',
                 'post_id'      => $post->id
-            ]);
-            $this->assertDatabaseHas('comments', 
+            ]
+        );
+
+        $this->assertDatabaseHas('comments', 
             [
                 'user_id'      => $user->id,
                 'comment_text' => 'comment here on hello',
                 'post_id'      => $post->id
-            ]);
+            ]
+        );
     }
    
     /**
@@ -58,19 +65,24 @@ class PostTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
+        
         Like::create(
             [
                 'user_id'       => $user->id,
                 'likeable_id'   => $post->id,
                 'likeable_type' => Post::class
-            ]);
-            $this->assertDatabaseHas('likes', 
+            ]
+        );
+
+        $this->assertDatabaseHas('likes', 
             [
                 'user_id'       => $user->id,
                 'likeable_id'   => $post->id,
                 'likeable_type' => Post::class
-            ]);
-            $this->assertTrue($post->likes->count()===1);
+            ]
+        );
+
+        $this->assertTrue($post->likes->count()===1);
     }
     
     /**
@@ -80,22 +92,28 @@ class PostTest extends TestCase
     {
         $user = User::factory()->create();
         $post = Post::factory()->create();
-        $comment = Comment::factory()->create([
-            'post_id' => $post->id
-        ]);
+        $comment = Comment::factory()->create(
+            [
+                'post_id' => $post->id
+            ]
+        );
 
         Like::create(
             [
                 'user_id'       => $user->id,
                 'likeable_id'   => $comment->id,
                 'likeable_type' => Comment::class
-            ]);
+            ]
+        );
+
         $this->assertDatabaseHas('likes', 
-        [
-            'user_id'       => $user->id,
-            'likeable_id'   => $comment->id,
-            'likeable_type' => Comment::class
-        ]);
+            [
+                'user_id'       => $user->id,
+                'likeable_id'   => $comment->id,
+                'likeable_type' => Comment::class
+            ]
+        );
+
         $this->assertTrue($comment->likes->count()===1);
     }
 }
