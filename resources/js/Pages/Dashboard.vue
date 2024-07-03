@@ -17,6 +17,7 @@ import { ref } from 'vue';
             <div class="row">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="text-center">You're logged in!</div>
+                    <p id="user" class="d-none">{{ $page.props.auth.user.id }}</p>
                     <form @submit.prevent="submitPost" class="new-post row g-3">
                         <InputLabel for="new-post" value="Write here" />
                         <div class="col-md-8">
@@ -33,20 +34,31 @@ import { ref } from 'vue';
                         </PrimaryButton>
                     </form>
                     <div class="post_items row g-3">
-                        <div class="post_item" v-for="(post, index) in posts">
+                        <div class="post_item" v-for="(post, index) in allPostsLoaded">
                             <div class="post_user">{{ post.user.first_name }}</div>
                             <span class="post_date">{{ post.created_at}}</span>
                             <p class="post_content">{{ post.post_content}}</p>
-                            <span class="post_likes">
-                                <i class="zmdi zmdi-thumb-up"></i>Likes
+                            <span v-if="post.likes.length" class="post_likes" @click="submitLikes(post.id, 'Post')">
+                                <i class="zmdi zmdi-thumb-up"></i>{{ post.likes.length }} Like
+                            </span>
+                            <span v-else class="post_likes" @click="submitLikes(post.id, 'Post')">
+                                <i class="zmdi zmdi-thumb-up"></i>0 Like
                             </span>
                             <span class="post_comments_count" @click="showComments">
-                                <i class="zmdi zmdi-comment-text"></i> {{ post.comments.length }} Comments
+                                <i class="zmdi zmdi-comment-text"></i> {{ post.comments.length }} Comment
                             </span>
                             <div class="post_comments">
                                 <div class="post_comment" v-for="(comment, index) in post.comments">
+                                    <p>
                                         <span class="d-block"><strong>{{ comment.user.first_name }}</strong></span>
                                         <span class="d-block">{{ comment.comment_text }}</span>
+                                    </p>
+                                    <span v-if="comment.likes.length" class="post_comment_like" @click="submitLikes(comment.id, 'Comment')">
+                                        <i class="zmdi zmdi-thumb-up"></i> {{ comment.likes.length }} Like
+                                    </span>
+                                    <span v-else class="post_comment_like" @click="submitLikes(comment.id, 'Comment')">
+                                        <i class="zmdi zmdi-thumb-up"></i> 0 Like
+                                    </span>
                                 </div>
                             </div>
                             <div class="post_comment-box row g-3">
@@ -62,7 +74,7 @@ import { ref } from 'vue';
                                 </PrimaryButton>
                             </div>
                         </div><!-- post-item end -->
-                        <PrimaryButton class="offset-lg-5 col-md-3">
+                        <PrimaryButton v-if="this.posts.length>3 && this.postLength < this.posts.length" @click="loadMore" class="offset-lg-5 col-md-3">
                             Load More
                         </PrimaryButton>
                     </div>
@@ -78,12 +90,13 @@ import { ref } from 'vue';
                 posts:[],
                 comments:[],
                 post_content: '',
-                allcomments: []
+                entryPresnt: false,
+                loggedInUser:0,
+                postLength: 3,
             }
         },
         mounted() {
-            this.getAllPosts();
-            this.getAllComments();
+            this.getAllPosts();//fetch all post on page load
         },
         methods: {
             //submit a post
@@ -92,6 +105,7 @@ import { ref } from 'vue';
                 .post('/create-post', {
                     post_content: this.post_content
                 })
+                .then(response => (window.location.reload()))
                 this.post_content='';
             },
             // fetch all posts
@@ -107,19 +121,32 @@ import { ref } from 'vue';
                     post_id: id,
                     comment_text: comment,
                 })
-            },
-            // fetch all comments
-            getAllComments() {
-                axios
-                .get('/comments')
-                .then(response => (this.allcomments = response.data))
+                .then(response => (window.location.reload()))
             },
             //hide & show comments section
             showComments(event) {
                 let targetElement = event.target;
                 let nextElement = targetElement.nextElementSibling;
                 nextElement.classList.toggle("show");
+            },
+            //like & dislike functionality
+            submitLikes(id, type) {
+                axios
+                .post('/submit-likes', {
+                    id: id,
+                    type: type
+                })
+                .then(response => (window.location.reload()))
+            },
+            loadMore() {
+                if (this.postLength > this.posts.length) return;
+                    this.postLength = this.postLength + 3;
             }
         },
+        computed: {
+            allPostsLoaded() {
+                return this.posts.slice(0, this.postLength);
+            },
+        }
     }
 </script>

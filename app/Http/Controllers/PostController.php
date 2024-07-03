@@ -11,7 +11,7 @@ use Inertia\Response;
 
 class PostController extends Controller
 {
-     /**
+    /**
      * @return Response
      */
     public function create(): Response
@@ -43,6 +43,6 @@ class PostController extends Controller
      */
     public function getPosts(): Collection
     {
-        return Post::with(['user','comments'])->get();
+        return Post::with(['user','comments','likes'])->get();
     }
 }
