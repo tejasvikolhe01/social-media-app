@@ -7,7 +7,6 @@ use App\Models\Like;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostTest extends TestCase
@@ -50,13 +49,10 @@ class PostTest extends TestCase
                 'comment_text' => 'comment here on hello',
                 'post_id'      => $post->id
             ]);
-        // $response = $this->get('/');
-
-        // $response->assertStatus(200);
     }
-
+   
     /**
-     * A basic test example.
+     * @return void
      */
     public function test_user_can_like_post(): void
     {
@@ -64,21 +60,21 @@ class PostTest extends TestCase
         $post = Post::factory()->create();
         Like::create(
             [
-                'user_id' => $user->id,
-                'likeable_id' => $post->id,
+                'user_id'       => $user->id,
+                'likeable_id'   => $post->id,
                 'likeable_type' => Post::class
             ]);
             $this->assertDatabaseHas('likes', 
             [
-                'user_id' => $user->id,
-                'likeable_id' => $post->id,
+                'user_id'       => $user->id,
+                'likeable_id'   => $post->id,
                 'likeable_type' => Post::class
             ]);
             $this->assertTrue($post->likes->count()===1);
     }
-
+    
     /**
-     * A basic test example.
+     * @return void
      */
     public function test_user_can_like_comment(): void
     {
@@ -87,18 +83,19 @@ class PostTest extends TestCase
         $comment = Comment::factory()->create([
             'post_id' => $post->id
         ]);
+
         Like::create(
             [
-                'user_id' => $user->id,
-                'likeable_id' => $comment->id,
+                'user_id'       => $user->id,
+                'likeable_id'   => $comment->id,
                 'likeable_type' => Comment::class
             ]);
-            $this->assertDatabaseHas('likes', 
-            [
-                'user_id' => $user->id,
-                'likeable_id' => $comment->id,
-                'likeable_type' => Comment::class
-            ]);
-            $this->assertTrue($comment->likes->count()===1);
+        $this->assertDatabaseHas('likes', 
+        [
+            'user_id'       => $user->id,
+            'likeable_id'   => $comment->id,
+            'likeable_type' => Comment::class
+        ]);
+        $this->assertTrue($comment->likes->count()===1);
     }
 }
