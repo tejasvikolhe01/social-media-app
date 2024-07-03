@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Like extends Model
 {
     use HasFactory;
+    
     /**
      * The attributes that are mass assignable.
      *

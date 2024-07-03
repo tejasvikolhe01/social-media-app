@@ -19,6 +19,7 @@ class LikeController extends Controller
     {
         $type = $request->type === 'Post' ? Post::class : Comment::class;
         $like = Like::where('likeable_id', $request->id)->where('likeable_type', $type)->where('user_id',auth()->id());
+        
         if($like->count() > 0) {
             $like->delete();
         } else {
