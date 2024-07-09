@@ -13,7 +13,7 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="sticky-top shadow-lg p-3 mb-5 bg-white rounded clearfix">
+            <nav role="navigation" class="sticky-top shadow-lg p-3 mb-5 bg-white rounded clearfix">
                 <!-- Primary Navigation Menu -->
                 <div class="d-lg-none">
                     <div class="flex justify-between h-16">
@@ -49,15 +49,6 @@ const showingNavigationDropdown = ref(false);
                                 </Dropdown>
                             </div>
                         </div>
-                        <!-- Hamburger -->
-                        <!-- <div class="d-lg-none">
-                            <button
-                                @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                            <i class="zmdi zmdi-menu"></i>
-                            </button>
-                        </div> -->
                     </div>
                 </div>
                 <!-- Responsive Navigation Menu -->
