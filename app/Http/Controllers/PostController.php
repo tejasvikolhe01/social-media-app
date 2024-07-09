@@ -6,7 +6,6 @@ use App\Models\Post;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,10 +39,10 @@ class PostController extends Controller
     }
         
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
     public function getPosts(): LengthAwarePaginator
     {
-        return Post::with(['user','comments','likes'])->paginate(3);
+        return Post::orderBy('created_at', 'DESC')->with(['user','comments','likes'])->paginate(3);
     }
 }
