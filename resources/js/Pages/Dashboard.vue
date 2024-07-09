@@ -148,6 +148,7 @@ import { ref } from 'vue';
                         }
                     })
                 }
+                this.comments.length = 0;
             },
             //hide & show comments section
             showComments(event) {
