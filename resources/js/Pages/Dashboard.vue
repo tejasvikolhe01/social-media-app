@@ -3,22 +3,21 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
     <Head title="Dashboard" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-center">Dashboard</h2>
+            <h1 class="text-center">Dashboard</h1>
         </template>
         <div class="container">
             <div class="row">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="text-center">You're logged in!</div>
                     <p id="user" class="d-none">{{ $page.props.auth.user.id }}</p>
-                    <form @submit.prevent="submitPost" class="new-post row g-3">
+                    <form role="form" @submit.prevent="submitPost" class="new-post row g-3" aria-label="Submit Post form">
                         <InputLabel for="new-post" value="Write here" />
                         <div class="col-md-8">
                             <TextInput
@@ -27,6 +26,7 @@ import { ref } from 'vue';
                             placeholder="write something here"
                             v-model="post_content"
                             autofocus
+                            aria-label="Post a blog here"
                             />
                         </div>
                         <PrimaryButton class="col-md-4">
@@ -34,7 +34,7 @@ import { ref } from 'vue';
                         </PrimaryButton>
                     </form>
                     <div class="post_items row g-3">
-                        <div class="post_item" v-for="(post, index) in allPostsLoaded">
+                        <div class="post_item" v-for="(post, index) in posts" tabindex="0">
                             <div class="post_user">{{ post.user.first_name }}</div>
                             <span class="post_date">{{ post.created_at}}</span>
                             <p class="post_content">{{ post.post_content}}</p>
@@ -63,10 +63,13 @@ import { ref } from 'vue';
                             </div>
                             <div class="post_comment-box row g-3">
                                 <div class="col-md-8">
+                                    <InputLabel class="d-none" :for="'new-comment_' + index"  value="Comment here"/>
                                     <TextInput
                                         type="text"
                                         placeholder="comment here"
+                                        :id="'new-comment_' + index"
                                         v-model="comments[index]"
+                                        aria-label="comment input field"
                                     />
                                 </div>
                                 <PrimaryButton @click="postComment(comments[index], post.id)" class="col-md-4">
@@ -74,9 +77,14 @@ import { ref } from 'vue';
                                 </PrimaryButton>
                             </div>
                         </div><!-- post-item end -->
-                        <PrimaryButton v-if="this.posts.length>3 && this.postLength < this.posts.length" @click="loadMore" class="offset-lg-5 col-md-3">
-                            Load More
-                        </PrimaryButton>
+                        <!-- pagination -->
+                        <nav role="navigation" aria-label=”pagination”>
+                            <ul class="pagination float-end">
+                                <li v-for="(link,index) in loadMoreLinks"  class="page-item">
+                                    <a v-bind:class="{ active: link.active }" class="page-link" @click="loadMorePosts(link.url)" v-if="index>0 && index<loadMoreLinks.length-1" href="javascript:void(0)">{{ index }}</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
