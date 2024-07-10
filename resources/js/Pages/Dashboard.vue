@@ -75,14 +75,11 @@ import { ref } from 'vue';
                                 </PrimaryButton>
                             </div>
                         </div><!-- post-item end -->
-                        <div>
-                            <a  href="javascript:void(0)" @click="loadMorePosts(link.url)">{{ index }}</a>
-                        </div>
                         <!-- pagination -->
                         <nav aria-label="Page">
                             <ul class="pagination float-end">
                                 <li v-for="(link,index) in loadMoreLinks"  class="page-item">
-                                    <a v-bind:class="{ active: link.active }" class="page-link" @click="loadMorePosts(link.url)" v-if="index>0 && index<loadMoreLinks.length-1" href="javascript:void(0)">{{ index }}</a>
+                                    <a :class="{ active: link.active }" class="page-link" @click="loadMorePosts(link.url)" v-if="index>0 && index<loadMoreLinks.length-1" href="#">{{ index }}</a>
                                 </li>
                             </ul>
                         </nav>
@@ -130,8 +127,9 @@ import { ref } from 'vue';
                 axios
                 .get('/posts')
                 .then(response => {
-                    this.posts = response.data.data;
-                    this.loadMoreLinks = response.data.links;
+                    const { data, links } = response.data;
+                    this.posts = data;
+                    this.loadMoreLinks = links;
                 })
             },
             //submit a comment
@@ -173,8 +171,9 @@ import { ref } from 'vue';
                 axios
                 .get(url)
                 .then(response =>{
-                    this.posts = response.data.data;
-                    this.loadMoreLinks = response.data.links;
+                    const { data, links} = response.data;
+                    this.posts = data;
+                    this.loadMoreLinks = links;
                 })
             },
             formatDate(date) {
