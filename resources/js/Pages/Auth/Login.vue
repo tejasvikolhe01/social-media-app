@@ -75,7 +75,7 @@ const submit = () => {
                     </label>
                 </div>
                 <div class="col-12">
-                    <PrimaryButton :class="{ 'opacity-25': form.processing }" role="button">
+                    <PrimaryButton role="button">
                         Log in
                     </PrimaryButton>
                 </div>
