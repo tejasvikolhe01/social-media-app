@@ -17,7 +17,7 @@ import { Head } from '@inertiajs/vue3';
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="text-center">You're logged in!</div>
                     <p id="user" class="d-none">{{ $page.props.auth.user.id }}</p>
-                    <form role="form" @submit.prevent="submitPost" class="new-post row g-3" aria-label="Submit Post form">
+                    <form @submit.prevent="submitPost" class="new-post row g-3" aria-label="Submit Post form">
                         <InputLabel for="new-post" value="Write here" />
                         <div class="col-md-8">
                             <TextInput

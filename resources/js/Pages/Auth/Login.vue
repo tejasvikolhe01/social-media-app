@@ -35,7 +35,7 @@ const submit = () => {
         <div v-if="status" class="text-success">
             {{ status }}
         </div>
-        <form role="form" @submit.prevent="submit" class="col-lg-4 offset-lg-4 px-4" aria-label="User Login">
+        <form @submit.prevent="submit" class="col-lg-4 offset-lg-4 px-4" aria-label="User Login">
             <div class="row g-3">
                 <div class="col-12">
                     <InputLabel for="email" value="Email" />
