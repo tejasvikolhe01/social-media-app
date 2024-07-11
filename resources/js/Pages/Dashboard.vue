@@ -32,11 +32,12 @@ import { ref } from 'vue';
                         <PrimaryButton class="col-md-4">
                             Post
                         </PrimaryButton>
+                        <span v-if="emptyPostInputCheck" class="text-danger">Please write something here</span>
                     </form>
                     <div class="post_items row g-3">
-                        <div class="post_item" v-for="(post, index) in allPostsLoaded">
+                        <div class="post_item" v-for="(post, index) in posts">
                             <div class="post_user">{{ post.user.first_name }}</div>
-                            <span class="post_date">{{ post.created_at}}</span>
+                            <span class="post_date">{{ formatDate(post.created_at)}}</span>
                             <p class="post_content">{{ post.post_content}}</p>
                             <span v-if="post.likes.length" class="post_likes" @click="submitLikes(post.id, 'Post')">
                                 <i class="zmdi zmdi-thumb-up"></i>{{ post.likes.length }} Like
@@ -74,9 +75,14 @@ import { ref } from 'vue';
                                 </PrimaryButton>
                             </div>
                         </div><!-- post-item end -->
-                        <PrimaryButton v-if="this.posts.length>3 && this.postLength < this.posts.length" @click="loadMore" class="offset-lg-5 col-md-3">
-                            Load More
-                        </PrimaryButton>
+                        <!-- pagination -->
+                        <nav aria-label="Page">
+                            <ul class="pagination float-end">
+                                <li v-for="(link,index) in loadMoreLinks"  class="page-item">
+                                    <a :class="{ active: link.active }" class="page-link" @click="loadMorePosts(link.url)" v-if="index>0 && index<loadMoreLinks.length-1" href="#">{{ index }}</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -90,38 +96,57 @@ import { ref } from 'vue';
                 posts:[],
                 comments:[],
                 post_content: '',
-                entryPresnt: false,
-                loggedInUser:0,
-                postLength: 3,
+                loadMoreLinks:[],
+                emptyPostInputCheck: false
             }
         },
         mounted() {
-            this.getAllPosts();//fetch all post on page load
+            //fetch all posts on page load
+            this.getAllPosts();
         },
         methods: {
             //submit a post
             submitPost() {
-                axios
-                .post('/create-post', {
-                    post_content: this.post_content
-                })
-                .then(response => (window.location.reload()))
+                if(this.post_content) {
+                    axios
+                    .post('/create-post', {
+                        post_content: this.post_content
+                    })
+                    .then(response => {
+                        if(response.status === 200) {
+                            this.getAllPosts();
+                        }
+                    })
+                } else {
+                    this.emptyPostInputCheck = true;
+                }
                 this.post_content='';
             },
             // fetch all posts
             getAllPosts() {
                 axios
                 .get('/posts')
-                .then(response => (this.posts = response.data))
+                .then(response => {
+                    const { data, links } = response.data;
+                    this.posts = data;
+                    this.loadMoreLinks = links;
+                })
             },
             //submit a comment
             postComment(comment, id) {
-                axios
-                .post('/create-comment', {
-                    post_id: id,
-                    comment_text: comment,
-                })
-                .then(response => (window.location.reload()))
+                if(comment) {
+                    axios
+                    .post('/create-comment', {
+                        post_id: id,
+                        comment_text: comment,
+                    })
+                    .then(response => {
+                        if(response.status === 200) {
+                            this.getAllPosts();
+                        }
+                    })
+                }
+                this.comments.length = 0;
             },
             //hide & show comments section
             showComments(event) {
@@ -136,17 +161,25 @@ import { ref } from 'vue';
                     id: id,
                     type: type
                 })
-                .then(response => (window.location.reload()))
+                .then(response => {
+                    if(response.status === 200) {
+                        this.getAllPosts();
+                    }
+                })
             },
-            loadMore() {
-                if (this.postLength > this.posts.length) return;
-                    this.postLength = this.postLength + 3;
+            loadMorePosts(url) {
+                axios
+                .get(url)
+                .then(response =>{
+                    const { data, links} = response.data;
+                    this.posts = data;
+                    this.loadMoreLinks = links;
+                })
+            },
+            formatDate(date) {
+                date = new Date(date);
+                return date.toDateString();
             }
-        },
-        computed: {
-            allPostsLoaded() {
-                return this.posts.slice(0, this.postLength);
-            },
         }
     }
 </script>
