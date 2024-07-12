@@ -27,7 +27,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
         <div class="container">
-            <form role="form" @submit.prevent="submit" class="col-lg-5 offset-lg-3" aria-label="Register User">
+            <form @submit.prevent="submit" class="col-lg-5 offset-lg-3" aria-label="Register User">
                 <div class="row g-3">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <InputLabel for="firstname" value="Firstname" />

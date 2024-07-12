@@ -76,7 +76,7 @@ const submit = () => {
                     </label>
                 </div>
                 <div class="col-12">
-                    <PrimaryButton role="button">
+                    <PrimaryButton>
                         Log in
                     </PrimaryButton>
                 </div>
