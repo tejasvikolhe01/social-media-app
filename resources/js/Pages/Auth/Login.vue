@@ -39,7 +39,7 @@ const submit = () => {
             <div class="row g-3">
                 <div class="col-12">
                     
-                    <InputLabel for="email" value="Username/Email" />
+                    <InputLabel for="email" value="Email" />
                     <TextInput
                         id="email"
                         type="email"
