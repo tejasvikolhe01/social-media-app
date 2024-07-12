@@ -3,6 +3,9 @@ label {
   display: inline-block;
   margin-bottom: .5rem;
 }
+a {
+  text-decoration: none;
+}
 
 .post {
   &_items{
@@ -15,6 +18,7 @@ label {
   }
   &_likes {
     margin: 0 5px;
+    cursor: pointer;
 
     i {
       margin-right: 8px;
@@ -22,6 +26,7 @@ label {
   }
   &_comments_count {
     margin: 0 5px;
+    cursor: pointer;
     
     i {
       margin-right: 8px;
@@ -42,6 +47,7 @@ label {
 
     &_like {
       font-size: 12px;
+      cursor: pointer;
     }
   }
 }

@@ -38,7 +38,8 @@ const submit = () => {
         <form @submit.prevent="submit" class="col-lg-4 offset-lg-4 px-4" aria-label="User Login">
             <div class="row g-3">
                 <div class="col-12">
-                    <InputLabel for="email" value="Email" />
+                    
+                    <InputLabel for="email" value="Username/Email" />
                     <TextInput
                         id="email"
                         type="email"
