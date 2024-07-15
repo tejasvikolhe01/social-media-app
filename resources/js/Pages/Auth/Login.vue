@@ -35,7 +35,7 @@ const submit = () => {
         <div v-if="status" class="text-success">
             {{ status }}
         </div>
-        <form @submit.prevent="submit" class="col-lg-4 offset-lg-4 px-4">
+        <form @submit.prevent="submit" class="col-lg-4 offset-lg-4 px-4" aria-label="User Login">
             <div class="row g-3">
                 <div class="col-12">
                     
@@ -46,7 +46,7 @@ const submit = () => {
                         class="form-control"
                         v-model="form.email"
                         autofocus
-                        autocomplete="username"
+                        aria-label="emailLabel"
                     />
                     <InputError :message="form.errors.email" />
                 </div>
@@ -57,29 +57,32 @@ const submit = () => {
                         type="password"
                         v-model="form.password"
                         autocomplete="current-password"
+                        aria-label="passwordLabel"
                     />
                     <InputError :message="form.errors.password" />
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
                         class="text-end"
+                        aria-label="Forgot your password link"
                     >
                         Forgot your password?
                     </Link>
                 </div>
                 <div class="form-check">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
+                    <Checkbox name="remember" v-model:checked="form.remember" aria-label="rememberMeLabel"/>
                     <label class="form-check-label" for="flexCheckDefault">
                         Remember me
                     </label>
                 </div>
                 <div class="col-12">
-                    <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    <PrimaryButton>
                         Log in
                     </PrimaryButton>
                 </div>
                 <Link
-                    :href="route('register')">
+                    :href="route('register')"
+                    aria-label="Don't have account? Click here to register">
                     Don't have account? Click here to register
                 </Link>
             </div>

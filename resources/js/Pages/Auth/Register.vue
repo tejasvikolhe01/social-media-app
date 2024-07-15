@@ -27,7 +27,7 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
         <div class="container">
-            <form @submit.prevent="submit" class="col-lg-5 offset-lg-3">
+            <form @submit.prevent="submit" class="col-lg-5 offset-lg-3" aria-label="Register User">
                 <div class="row g-3">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <InputLabel for="firstname" value="Firstname" />
@@ -36,7 +36,7 @@ const submit = () => {
                             type="text"
                             v-model="form.firstname"
                             autofocus
-                            autocomplete="firstname"
+                            aria-label="firstnameLabel"
                         />
                         <InputError :message="form.errors.firstname" />
                     </div>
@@ -47,7 +47,7 @@ const submit = () => {
                             type="text"
                             v-model="form.lastname"
                             autofocus
-                            autocomplete="lastname"
+                            aria-label="lastnameLabel"
                         />
                         <InputError :message="form.errors.lastname" />
                     </div>                        
@@ -57,7 +57,7 @@ const submit = () => {
                             id="dob"
                             type="date"
                             v-model="form.dob"
-                            autofocus
+                            aria-label="dobLabel"
                         />
                         <InputError :message="form.errors.dob" />
                     </div>
@@ -67,8 +67,7 @@ const submit = () => {
                             id="username"
                             type="text"
                             v-model="form.username"
-                            autofocus
-                            autocomplete="username"
+                            aria-label="usernameLabel"
                         />
                         <InputError :message="form.errors.username" />
                     </div>     
@@ -78,7 +77,7 @@ const submit = () => {
                             id="email"
                             type="email"
                             v-model="form.email"
-                            autocomplete="username"
+                            aria-label="emailLabel"
                         />
                         <InputError :message="form.errors.email" />
                     </div>
@@ -88,7 +87,7 @@ const submit = () => {
                             id="password"
                             type="password"
                             v-model="form.password"
-                            autocomplete="new-password"
+                            aria-label="newPasswordLabel"
                         />
                         <InputError :message="form.errors.password" />
                     </div>
@@ -98,7 +97,7 @@ const submit = () => {
                             id="password_confirmation"
                             type="password"
                             v-model="form.password_confirmation"
-                            autocomplete="new-password"
+                            aria-label="confirmPasswordLabel"
                         />
                         <InputError :message="form.errors.password_confirmation" />
                     </div>
@@ -109,7 +108,8 @@ const submit = () => {
                     </div>
                     <div class="col-12">
                         <Link
-                            :href="route('login')">
+                            :href="route('login')"
+                            aria-label="Already registered?">
                             Already registered?
                         </Link>
                     </div>
